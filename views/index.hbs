@@ -1,0 +1,108 @@
+<main class="main">
+  <header class="header home">
+    <div class="container">
+      <div class="logo-wrapper">
+        <img src="/images/pokeball.svg" alt="pokeball" />
+        <h1>Pokédex</h1>
+      </div>
+      <div class="search-wrapper">
+        <div class="search-wrap">
+          <img src="/images/search.svg" alt="search icon" class="search-icon" />
+          <input type="text" class="search-input fs-3" placeholder="Search Pokémon..." id="search-input" />
+          <img src="/images/cross.svg" alt="cross icon" class="search-close-icon" id="search-close-icon" />
+        </div>
+        <div class="sort-wrapper">
+          <div class="sort-wrap">
+            <img src="/images/sorting.svg" alt="sorting" class="sort-icon" id="sort-icon" />
+          </div>
+          <div class="filter-wrapper">
+            <p class="fs-2">Sort by:</p>
+            <div class="filter-wrap">
+              <div>
+                <input type="radio" id="number" name="filters" value="number" checked />
+                <label for="number" class="fs-3">Number</label>
+              </div>
+              <div>
+                <input type="radio" id="name" name="filters" value="name" />
+                <label for="name" class="fs-3">Name</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section class="pokemon-list">
+    <div class="container">
+      <div id="pokemon-container">
+        {{#each pokemons}}
+        <div class="pokemon-card" data-name="{{name}}" data-number="{{number}}">
+          <a href="/pokemon/{{name}}">
+            <img src="{{image}}" alt="{{name}}">
+            <h2>{{name}}</h2>
+          </a>
+        </div>
+        {{/each}}
+      </div>
+      <div id="not-found-message" style="display: none;">Pokémon not found</div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const inputElement = document.querySelector("#search-input");
+  const searchIcon = document.querySelector("#search-close-icon");
+  const sortWrapper = document.querySelector(".sort-wrapper");
+  const filterOptions = document.querySelectorAll("input[name='filters']");
+  const pokemonContainer = document.querySelector("#pokemon-container");
+  const notFoundMessage = document.querySelector("#not-found-message");
+  const pokemonCards = document.querySelectorAll(".pokemon-card");
+
+  inputElement.addEventListener("input", handleSearchInput);
+  searchIcon.addEventListener("click", clearSearchInput);
+  sortWrapper.addEventListener("click", toggleFilterOptions);
+  filterOptions.forEach(option => option.addEventListener("change", sortPokemons));
+
+  function handleSearchInput() {
+    const searchValue = inputElement.value.toLowerCase();
+    let hasResults = false;
+
+    pokemonCards.forEach(card => {
+      const pokemonName = card.getAttribute("data-name").toLowerCase();
+      if (pokemonName.includes(searchValue)) {
+        card.style.display = "block";
+        hasResults = true;
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    notFoundMessage.style.display = hasResults ? "none" : "block";
+    searchIcon.classList.toggle("search-close-icon-visible", searchValue !== "");
+  }
+
+  function clearSearchInput() {
+    inputElement.value = "";
+    inputElement.dispatchEvent(new Event("input"));
+  }
+
+  function toggleFilterOptions() {
+    document.querySelector(".filter-wrapper").classList.toggle("filter-wrapper-open");
+    document.body.classList.toggle("filter-wrapper-overlay");
+  }
+
+  function sortPokemons() {
+    const sortBy = document.querySelector("input[name='filters']:checked").value;
+    const cardsArray = Array.from(pokemonCards);
+    const sortedCards = cardsArray.sort((a, b) => {
+      if (sortBy === "number") {
+        return a.dataset.number - b.dataset.number;
+      } else {
+        return a.dataset.name.localeCompare(b.dataset.name);
+      }
+    });
+
+    pokemonContainer.innerHTML = "";
+    sortedCards.forEach(card => pokemonContainer.appendChild(card));
+  }
+</script>
