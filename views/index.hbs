@@ -35,14 +35,22 @@
   <section class="pokemon-list">
     <div class="container">
       <div id="pokemon-container">
-        {{#each pokemons}}
-        <div class="pokemon-card" data-name="{{name}}" data-number="{{number}}">
-          <a href="/pokemon/{{name}}">
-            <img src="{{image}}" alt="{{name}}">
-            <h2>{{name}}</h2>
-          </a>
+        <div class="list-wrapper">
+          {{#each pokemons}}
+            <a href="/pokemon/{{name}}" class="list-item" data-name="{{name}}" data-number="{{number}}">
+
+              <div class="number-wrap">
+                <p class="caption-fonts">{{number}}</p>
+              </div>
+              <div class="img-wrap">
+                <img src="{{image}}" alt="{{name}}" />
+              </div>
+              <div class="name-wrap">
+                <p class="fs-3">{{name}}</p>
+              </div>
+            </a>
+          {{/each}}
         </div>
-        {{/each}}
       </div>
       <div id="not-found-message" style="display: none;">Pokémon not found</div>
     </div>
@@ -56,7 +64,7 @@
   const filterOptions = document.querySelectorAll("input[name='filters']");
   const pokemonContainer = document.querySelector("#pokemon-container");
   const notFoundMessage = document.querySelector("#not-found-message");
-  const pokemonCards = document.querySelectorAll(".pokemon-card");
+  const pokemonCards = document.querySelectorAll(".list-item");
 
   inputElement.addEventListener("input", handleSearchInput);
   searchIcon.addEventListener("click", clearSearchInput);
