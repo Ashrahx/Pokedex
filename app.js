@@ -44,6 +44,10 @@ const startServer = async () => {
 
 startServer();
 
+hbs.registerHelper('formatPokemonId', function(id) {
+  return `#${String(id).padStart(3, '0')}`;
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

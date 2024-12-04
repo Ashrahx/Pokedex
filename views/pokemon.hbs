@@ -1,23 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{pokemon.name}}</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-<body>
-  <header>
-    <h1>{{pokemon.name}}</h1>
-    <a href="/">Volver a la Pokédex</a>
-  </header>
-  <main>
-    <img src="{{pokemon.image}}" alt="{{pokemon.name}}">
-    <p><strong>Descripción:</strong> {{pokemon.description}}</p>
-    <p><strong>Altura:</strong> {{pokemon.height}} m</p>
-    <p><strong>Peso:</strong> {{pokemon.weight}} kg</p>
-    <p><strong>Habilidades:</strong> {{#each pokemon.abilities}}{{this}}, {{/each}}</p>
-    <p><strong>Tipos:</strong> {{#each pokemon.types}}{{this}}, {{/each}}</p>
-  </main>
-</body>
-</html>
+<main class="detail-main main">
+      <header class="header">
+        <div class="header-wrapper">
+          <div class="header-wrap">
+            <a href="/" class="back-btn-wrap">
+              <img
+                src="/images/back-to-home.svg"
+                alt="back to home"
+                class="back-btn"
+                id="back-btn"
+              />
+            </a>
+            <div class="name-wrap">
+              <h1 class="name">{{pokemon.name}}</h1>
+            </div>
+          </div>
+          <div class="pokemon-id-wrap">
+            <p class="fs-2" id="pokemonId">{{formatPokemonId pokemon.id}}</p>
+          </div>
+        </div>
+      </header>
+      <div class="featured-img">
+        <a href="#" class="arrow left-arrow" id="leftArrow">
+          <img src="/images/chevron_left.svg" alt="back" />
+        </a>
+        <div class="detail-img-wrapper">
+          <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/{{pokemon.id}}.svg" alt="{{pokemon.name}}" />
+        </div>
+        <a href="#" class="arrow right-arrow" id="rightArrow">
+          <img src="/images/chevron_right.svg" alt="forward" />
+        </a>
+      </div>
+      <div class="detail-card-detail-wrapper">
+        <div class="power-wrapper">
+          {{#each pokemon.types}}
+          <p class="fs-3 type" data-type="{{this}}">{{this}}</p>
+          {{/each}}
+        </div>
+
+        <p class="fs-2 about-text">About</p>
+        <div class="pokemon-detail-wrapper">
+          <div class="pokemon-detail-wrap">
+            <div class="pokemon-detail">
+              <img src="/images/weight.svg" alt="weight" />
+              <p class="fs-3 weight">{{pokemon.weight}}</p>
+            </div>
+            <p class="caption-fonts">Weight</p>
+          </div>
+          <div class="pokemon-detail-wrap">
+            <div class="pokemon-detail">
+              <img src="/images/height.svg" alt="height" class="straighten" />
+              <p class="fs-3 height">{{pokemon.height}}</p>
+            </div>
+            <p class="caption-fonts">Height</p>
+          </div>
+          <div class="pokemon-detail-wrap">
+            <div class="pokemon-detail move">{{#each pokemon.abilities}}{{this}}, {{/each}}</div>
+            <p class="caption-fonts">Move</p>
+          </div>
+        </div>
+        <p class="fs-3 pokemon-description">{{pokemon.description}}</p>
+      </div>
+      <img src="/images/pokedex.svg" alt="pokedex" class="detail-bg" />
+    </main>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+
+
+  const typeColors = {
+    Planta: "#78C850",
+    Veneno: "#A040A0",
+    Agua: "#6890F0",
+    Fuego: "#F08030",
+    Normal: "#A8A878",
+    Eléctrico: "#F8D030",
+    Hielo: "#98D8D8",
+    Lucha: "#C03028",
+    Tierra: "#E0C068",
+    Volador: "#A890F0",
+    Psíquico: "#F85888",
+    Bicho: "#A8B820",
+    Roca: "#B8A038",
+    Fantasma: "#705898",
+    Dragón: "#7038F8",
+    Siniestro: "#705848",
+    Acero: "#B8B8D0",
+    Hada: "#EE99AC",
+  };
+
+  document.querySelectorAll(".type").forEach((typeElement) => {
+    const type = typeElement.dataset.type;
+    const color = typeColors[type];
+    if (color) {
+      typeElement.style.backgroundColor = color;
+      typeElement.style.color = "#fff";
+    }
+  });
+
+  const firstTypeElement = document.querySelector(".type");
+  if (firstTypeElement) {
+    const firstType = firstTypeElement.dataset.type;
+    const firstTypeColor = typeColors[firstType];
+    if (firstTypeColor) {
+      const mainElement = document.querySelector("body");
+      if (mainElement) {
+        mainElement.style.backgroundColor = firstTypeColor;
+      }
+    }
+  }
+});
+
+</script>

@@ -25,6 +25,7 @@ const initDB = async () => {
     const pokemonPromises = pokemons.map(async (pokemon) => {
       const details = await axios.get(pokemon.url);
       const data = details.data;
+      const id = data.id;
 
       // Obtener descr en español
       const speciesDetails = await axios.get(data.species.url);
@@ -48,6 +49,7 @@ const initDB = async () => {
       const types = await Promise.all(typesPromises);
 
       const newPokemon = {
+        id,
         name: data.name,
         image: data.sprites.front_default,
         abilities,
@@ -57,7 +59,7 @@ const initDB = async () => {
         description
       };
 
-      const existingPokemon = await Pokemon.findOne({ name: newPokemon.name });
+      const existingPokemon = await Pokemon.findOne({ id: newPokemon.id });
       if (!existingPokemon) {
         return Pokemon.create(newPokemon);
       }

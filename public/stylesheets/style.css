@@ -13,6 +13,7 @@
   --fs-1: 0.875rem;
   --fs-2: 0.75rem;
   --fs-3: 0.625rem;
+  --fs-4: 1rem;
   --subtitle-fs-1: 0.875rem;
   --subtitle-fs-2: 0.75rem;
   --subtitle-fs-3: 0.625rem;
@@ -32,6 +33,14 @@
 
 *{
   font-family: 'Poppins';
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #dc0a2d;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--grayscale-background);
 }
 
 a {
@@ -74,6 +83,10 @@ h4 {
 
 .fs-3 {
   font-size: var(--fs-3);
+}
+
+.fs-4 {
+  font-size: var(--fs-4);
 }
 
 .caption-fonts {
@@ -275,6 +288,11 @@ body {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.list-item:hover {
+  transform: scale(1.06);
 }
 
 .list-item .number-wrap {
@@ -547,4 +565,10 @@ div#not-found-message {
   flex-wrap: wrap;
   gap: 20px;
   margin-top: 1rem;
+  justify-content: center;
+}
+
+.no-found-image {
+  width: 18.75rem;
+  height: auto;
 }

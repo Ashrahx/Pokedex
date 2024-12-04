@@ -5,7 +5,7 @@ const Pokemon = require('../models/Pokemon');
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   try{
-    const pokemons = await Pokemon.find().sort({ name: 1});
+    const pokemons = await Pokemon.find().sort({ id: 1});
     res.render('index', {pokemons}); 
   }catch(error){
     next(error);
@@ -27,3 +27,5 @@ router.get('/pokemon/:name', async (req, res, next) =>{
 });
 
 module.exports = router;
+
+
