@@ -28,22 +28,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
-
+// --- CORRECCIÓN AQUÍ ---
+// Conectamos a la BD, pero NO hacemos app.listen. 
+// Mongoose maneja la conexión de forma asíncrona y las rutas esperarán si es necesario.
 const uri = process.env.MONGO_URI; 
 
-const startServer = async () => {
-  try {
-    await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log('Conectado a MongoDB');
+mongoose.connect(uri)
+  .then(() => console.log('Conectado a MongoDB'))
+  .catch(err => console.error('Error conectando a MongoDB:', err));
 
-    app.listen(3000, () => console.log('Servidor iniciado en http://localhost:3000'));
-  } catch (error) {
-    console.error('No se pudo conectar a MongoDB:', error);
-  }
-};
-
-startServer();
-
+// Helpers
 hbs.registerHelper('formatPokemonId', function(id) {
   return `#${String(id).padStart(3, '0')}`;
 });
