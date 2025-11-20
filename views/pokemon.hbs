@@ -20,15 +20,21 @@
         </div>
       </header>
       <div class="featured-img">
-        <a href="#" class="arrow left-arrow" id="leftArrow">
-          <img src="/images/chevron_left.svg" alt="back" />
-        </a>
+        {{#if prevPokemon}}
+          <a href="/pokemon/{{prevPokemon}}" class="arrow left-arrow" id="leftArrow">
+            <img src="/images/chevron_left.svg" alt="back" />
+          </a>
+        {{/if}}
+      
         <div class="detail-img-wrapper">
           <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/{{pokemon.id}}.svg" alt="{{pokemon.name}}" />
         </div>
-        <a href="#" class="arrow right-arrow" id="rightArrow">
-          <img src="/images/chevron_right.svg" alt="forward" />
-        </a>
+      
+        {{#if nextPokemon}}
+          <a href="/pokemon/{{nextPokemon}}" class="arrow right-arrow" id="rightArrow">
+            <img src="/images/chevron_right.svg" alt="forward" />
+          </a>
+        {{/if}}
       </div>
       <div class="detail-card-detail-wrapper">
         <div class="power-wrapper">
